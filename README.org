@@ -59,7 +59,7 @@ the scores of the candidates are uniformly distributed, from worse
 
 For a relatively total small number of candidates LENGTH=100 (for
 many scenarios, of a realistic order of magnitude), and various
-soft_factor, here are the corresponding implementations:
+soft_factor values, here are the corresponding implementations:
 
  - [[file:good_stop_other_strategy_less_demanding70pct_prctile1_simul_length100.d][soft_factor=70%]]
  - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_simul_length100.d][soft_factor=80%]] (my favorite)
@@ -67,7 +67,7 @@ soft_factor, here are the corresponding implementations:
  - [[file:good_stop_other_strategy_less_demanding90pct_prctile1_simul_length100.d][soft_factor=90%]]
  - [[file:good_stop_other_strategy_less_demanding95pct_prctile1_simul_length100.d][soft_factor=95%]]
 
-_Figure_: score of lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
+_Figure_: score at the lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
  - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.m][octave code to produce the figure]]
  - figure (click [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
@@ -81,8 +81,8 @@ which gives a lowest 1% percentile with a score of 0.68.
 Tradeoff: When accepting the 1% risk, that result is a pretty good
 security, and most likely in practice we'll end up with a better
 pick. For soft_factor=80% and cutoff threshold around 40/100:
- - score of lowest 1% percentile: around 0.68
- - median score of top 99% percentiles: around 0.72
+ - score at the  lowest 1% percentile: around 0.68
+ - median score of top 99% percentile: around 0.72
 
 Values around 0.72 can be judged as "pretty good", which was our objective. 
 

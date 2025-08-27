@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-27 Ср 20:31 -->
+<!-- 2025-08-27 Ср 20:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -332,7 +332,7 @@ the scores of the candidates are uniformly distributed, from worse
 <p>
 For a relatively total small number of candidates LENGTH=100 (for
 many scenarios, of a realistic order of magnitude), and various
-soft_factor, here are the corresponding implementations:
+soft_factor values, here are the corresponding implementations:
 </p>
 
 <ul class="org-ul">
@@ -344,7 +344,7 @@ soft_factor, here are the corresponding implementations:
 </ul>
 
 <p>
-<span class="underline">Figure</span>: score of lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
+<span class="underline">Figure</span>: score at the lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.m">octave code to produce the figure</a></li>
@@ -372,8 +372,8 @@ security, and most likely in practice we'll end up with a better
 pick. For soft_factor=80% and cutoff threshold around 40/100:
 </p>
 <ul class="org-ul">
-<li>score of lowest 1% percentile: around 0.68</li>
-<li>median score of top 99% percentiles: around 0.72</li>
+<li>score at the  lowest 1% percentile: around 0.68</li>
+<li>median score of top 99% percentile: around 0.72</li>
 </ul>
 
 <p>
@@ -408,7 +408,7 @@ candidate, we built a strategy that guarantees 99% success.
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-08-27 Ср 20:31</p>
+<p class="date">Created: 2025-08-27 Ср 20:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
