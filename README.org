@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+#+TITLE: Soft Optimal Stop For 99% Guarantee
+#+OPTIONS: author:nil date:nil toc:nil ^:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="README.css" />
+
+By Guillaume Lathoud, August 2025 - glat@glat.info - [[https://github.com/glathoud/sos99][Github]] [[https://glat.info/sos99/][website]] [[./README.pdf][PDF]]\\
+
+
+The present document and all accompanying files are covered by the
+Boost License, as described in file:./LICENSE\\
+
+_Starting point:_
+https://en.wikipedia.org/wiki/Secretary_problem\\
+
+The Optimal Stop Problem & its solution (37%...) sound nice, but 37%
+also means that one has a 37% chance to end up with the fallback
+solution - i.e. to pick the last candidate: say one already saw the
+best possible candidate before the 37% cutoff, then one mechanically
+ends up picking the last candidate, which gives a pretty random
+result. The output can be pretty bad, so the reliability is not
+guaranteed, at least not over a single pass.
+
+And in life, there are quite a few single pass situations.
+
+So instead, let us try to solve a slightly different problem:
+guarantee with 99% chance that we'll pick a "pretty good" candidate
+(not necessarily the best one).
+
+So we need a strategy to maximize the worst case, i.e. maximize the
+1% lowest percentile within the results of many simulations.\\
+
+_Proposed strategy:_ very similar to the Optimal Stop one, but a bit
+softer:
+
+ - look at the first N_STOP candidates (e.g. cutoff 37%, or any
+   other percentage of the whole number of candidates)
+   - pick none of them
+
+ - determine threshold_score := soft_factor * best_score_of_N_STOP
+   - example soft_factor: 80%
+
+ - now start looking at the rest candidates
+   - pick the first one with score > threshold_score
+   - else pick the last one
+
+So the differences with the Optimal Stop are:
+
+ - in the evaluation: for a given threshold, we repeat a simulation
+   many times and look at the score of the lowest 1% percentile
+   (instead of "percentage that picked the true best one").
+
+ - in the solution: introduced a soft_factor
+
+_One possible implementation: uniform use case_
+
+We don't know anything about the target market, so let's assume that
+the scores of the candidates are uniformly distributed, from worse
+(0.0) to best (1.0).
+
+For a relatively total small number of candidates LENGTH=100 (for
+many scenarios, of a realistic order of magnitude), and various
+soft_factor, here are the corresponding implementations:
+
+ - [[file:good_stop_other_strategy_less_demanding70pct_prctile1_simul_length100.d][soft_factor=70%]]
+ - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_simul_length100.d][soft_factor=80%]] (my favorite)
+ - [[file:good_stop_other_strategy_less_demanding85pct_prctile1_simul_length100.d][soft_factor=85%]]
+ - [[file:good_stop_other_strategy_less_demanding90pct_prctile1_simul_length100.d][soft_factor=90%]]
+ - [[file:good_stop_other_strategy_less_demanding95pct_prctile1_simul_length100.d][soft_factor=95%]]
+
+some snapshot of the outputs (for/with Octave): score of lowest 1% percentile:
+ - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.m][octave code to produce the figure]]
+ - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][figure]]: file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
+
+That figure shows the score of the lowest 1% percentile. Notice in
+all cases the break off when increasing too much the cutoff N_STOP.
+
+My favorite would be soft_factor=80% and cutoff threshold around 40/100,
+which gives a lowest 1% percentile with a score of 0.68.
+
+Tradeoff: When accepting the 1% risk, that result is a pretty good
+security, and most likely in practice we'll end up with a better
+pick. For soft_factor=80% and cutoff threshold around 40/100:
+ - score of lowest 1% percentile: around 0.68
+ - median score of top 99% percentiles: around 0.72
+
+some snapshot of the outputs for soft_factor=80% (for/with Octave): showing lowest 1% percentile, and median of the top 99% percentiles:
+ - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m][Octave code to produce the figure]]
+ - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][figure]]: file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
+
+Note: Generally, changing the order of magnitude of LENGTH can possibly change quite
+a bit the shape of the results.\\
+
+_Conclusion_
+
+By *not* targetting the best candidate, but rather a "pretty good"
+candidate, we built a strategy that guarantees 99% success.
+
