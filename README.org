@@ -3,7 +3,7 @@
 #+OPTIONS: author:nil date:nil toc:nil ^:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="README.css" />
 
-By Guillaume Lathoud, August 2025 - glat@glat.info - [[https://github.com/glathoud/sos99][Github]] [[https://glat.info/sos99/][website]] [[./README.pdf][PDF]]\\
+By [[https://glat.info][Guillaume Lathoud]], August 2025 - glat@glat.info - [[https://github.com/glathoud/sos99][Github]] [[https://glat.info/sos99/][website]] [[./README.pdf][PDF]]\\
 
 
 The present document and all accompanying files are covered by the
