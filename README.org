@@ -24,7 +24,7 @@ And in life, there are quite a few single pass situations.
 
 So instead, let us try to solve a slightly different problem:
 guarantee with 99% chance that we'll pick a "pretty good" candidate
-(not necessarily the best one).
+(not targetting the best one).
 
 So we need a strategy to maximize the worst case, i.e. maximize the
 1% lowest percentile within the results of many simulations.\\
@@ -67,9 +67,10 @@ soft_factor, here are the corresponding implementations:
  - [[file:good_stop_other_strategy_less_demanding90pct_prctile1_simul_length100.d][soft_factor=90%]]
  - [[file:good_stop_other_strategy_less_demanding95pct_prctile1_simul_length100.d][soft_factor=95%]]
 
-some snapshot of the outputs (for/with Octave): score of lowest 1% percentile:
+_Figure_: score of lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
  - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.m][octave code to produce the figure]]
- - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][figure]]: file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
+ - figure (click [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][here]] to open a bigger version):
+file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
 
 That figure shows the score of the lowest 1% percentile. Notice in
 all cases the break off when increasing too much the cutoff N_STOP.
@@ -83,9 +84,12 @@ pick. For soft_factor=80% and cutoff threshold around 40/100:
  - score of lowest 1% percentile: around 0.68
  - median score of top 99% percentiles: around 0.72
 
-some snapshot of the outputs for soft_factor=80% (for/with Octave): showing lowest 1% percentile, and median of the top 99% percentiles:
+Values around 0.72 can be judged as "pretty good", which was our objective. 
+
+_Figure_: lowest 1% percentile, and median of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
  - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m][Octave code to produce the figure]]
- - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][figure]]: file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
+ - figure (click [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][here]] to open a bigger version):
+file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
 
 Note: Generally, changing the order of magnitude of LENGTH can possibly change quite
 a bit the shape of the results.\\

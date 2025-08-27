@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-27 Ср 19:57 -->
+<!-- 2025-08-27 Ср 20:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -275,7 +275,7 @@ And in life, there are quite a few single pass situations.
 <p>
 So instead, let us try to solve a slightly different problem:
 guarantee with 99% chance that we'll pick a "pretty good" candidate
-(not necessarily the best one).
+(not targetting the best one).
 </p>
 
 <p>
@@ -344,12 +344,17 @@ soft_factor, here are the corresponding implementations:
 </ul>
 
 <p>
-some snapshot of the outputs (for/with Octave): score of lowest 1% percentile:
+<span class="underline">Figure</span>: score of lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.m">octave code to produce the figure</a></li>
-<li><a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png">figure</a>: <img src="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png" alt="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png" /></li>
+<li>figure (click <a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png">here</a> to open a bigger version):</li>
 </ul>
+
+<div class="figure">
+<p><img src="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png" alt="good_stop_other_strategy_less_demanding_prctile1_simul_length100.png" />
+</p>
+</div>
 
 <p>
 That figure shows the score of the lowest 1% percentile. Notice in
@@ -372,12 +377,21 @@ pick. For soft_factor=80% and cutoff threshold around 40/100:
 </ul>
 
 <p>
-some snapshot of the outputs for soft_factor=80% (for/with Octave): showing lowest 1% percentile, and median of the top 99% percentiles:
+Values around 0.72 can be judged as "pretty good", which was our objective. 
+</p>
+
+<p>
+<span class="underline">Figure</span>: lowest 1% percentile, and median of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m">Octave code to produce the figure</a></li>
-<li><a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png">figure</a>: <img src="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png" alt="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png" /></li>
+<li>figure (click <a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png">here</a> to open a bigger version):</li>
 </ul>
+
+<div class="figure">
+<p><img src="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png" alt="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png" />
+</p>
+</div>
 
 <p>
 Note: Generally, changing the order of magnitude of LENGTH can possibly change quite
@@ -394,7 +408,7 @@ candidate, we built a strategy that guarantees 99% success.
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-08-27 Ср 19:57</p>
+<p class="date">Created: 2025-08-27 Ср 20:23</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
