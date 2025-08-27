@@ -27,7 +27,7 @@ guarantee with 99% chance that we'll pick a "pretty good" candidate
 (not targetting the best one).
 
 So we need a strategy to maximize the worst case, i.e. maximize the
-1% lowest percentile within the results of many simulations.\\
+1% lowest percentile across the results of many simulations.\\
 
 _Proposed strategy:_ very similar to the Optimal Stop one, but a bit
 softer:
@@ -86,7 +86,7 @@ pick. For soft_factor=80% and cutoff threshold around 40/100:
 
 Values around 0.72 can be judged as "pretty good", which was our objective. 
 
-_Figure_: lowest 1% percentile, and median of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
+_Figure_: score of the lowest 1% percentile, and median score of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
  - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m][Octave code to produce the figure]]
  - figure (click [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
