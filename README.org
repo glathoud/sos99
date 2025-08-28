@@ -3,22 +3,28 @@
 #+OPTIONS: author:nil date:nil toc:nil ^:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="README.css" />
 
-By [[https://glat.info][Guillaume Lathoud]], August 2025 - glat@glat.info - [[https://github.com/glathoud/sos99][Github]] [[https://glat.info/sos99/][website]] [[./README.pdf][PDF]]\\
+By [[https://glat.info][Guillaume Lathoud]], August 2025 (glat@glat.info) [[https://github.com/glathoud/sos99][Github]] [[https://glat.info/sos99/][web]] [[./README.pdf][PDF]]\\
 
 
 The present document and all accompanying files are covered by the
-Boost License, as described in file:./LICENSE\\
+Boost License, as described in file:./LICENSE (unless precised otherwise).\\
 
 _Starting point:_
 https://en.wikipedia.org/wiki/Secretary_problem\\
 
-The Optimal Stop Problem & its solution (37%...) sound nice, but 37%
-also means that one has a 37% chance to end up with the fallback
-solution - i.e. to pick the last candidate: say one already saw the
-best possible candidate before the 37% cutoff, then one mechanically
-ends up picking the last candidate, which gives a pretty random
-result. The output can be pretty bad, so the reliability is not
-guaranteed, at least not over a single pass.
+#+ATTR_LATEX: :height 250px
+file:250px_secretary_problem.png
+
+(illustration by cmglee - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=163173987)
+
+The Secretary Problem & its Optimal Stop solution (37%...) sound
+nice, but 37% also means that one has a 37% chance to end up with
+the fallback solution - i.e. to pick the last candidate. Indeed, if one
+already saw the best possible candidate before the 37% cutoff, then
+one mechanically ends up picking the last candidate (case 3 in the
+above figure), which gives a pretty random result. The output can be
+pretty bad, so the reliability is not guaranteed, at least not over
+a single pass.
 
 And in life, there are quite a few single pass situations.
 
@@ -26,8 +32,9 @@ So instead, let us try to solve a slightly different problem:
 guarantee with 99% chance that we'll pick a "pretty good" candidate
 (not targetting the best one).
 
-So we need a strategy to maximize the worst case, i.e. maximize the
-1% lowest percentile across the results of many simulations.\\
+So we need a strategy to maximize the worst case. To that effect, we
+choose to maximize the score of the 1% lowest percentile across the results of
+many simulations.\\
 
 _Proposed strategy:_ very similar to the Optimal Stop one, but a bit
 softer:
@@ -45,7 +52,7 @@ softer:
 
 So the differences with the Optimal Stop are:
 
- - in the evaluation: for a given threshold, we repeat a simulation
+ - in the problem & evaluation: for a given threshold, we repeat a simulation
    many times and look at the score of the lowest 1% percentile
    (instead of "percentage that picked the true best one").
 
@@ -72,26 +79,26 @@ _Figure_: score at the lowest 1% percentile for various soft_factor values and v
  - figure (click [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
 
-That figure shows the score of the lowest 1% percentile. Notice in
+The previous figure shows the score of the lowest 1% percentile. Notice in
 all cases the break off when increasing too much the cutoff N_STOP.
 
 My favorite would be soft_factor=80% and cutoff threshold around 40/100,
 which gives a lowest 1% percentile with a score of 0.68.
 
 Tradeoff: When accepting the 1% risk, that result is a pretty good
-security, and most likely in practice we'll end up with a better
+guarantee, and most likely in practice we'll end up with a better
 pick. For soft_factor=80% and cutoff threshold around 40/100:
  - score at the  lowest 1% percentile: around 0.68
  - median score of top 99% percentile: around 0.72
 
 Values around 0.72 can be judged as "pretty good", which was our objective. 
 
-_Figure_: score of the lowest 1% percentile, and median score of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
+_Figure_: for soft_factor=80% and various cutoff values, score of the lowest 1% percentile, and median score of the top 99% percentiles (for/with Octave):
  - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m][Octave code to produce the figure]]
  - figure (click [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
 
-Note: Generally, changing the order of magnitude of LENGTH can possibly change quite
+_Observation_: Generally, changing the order of magnitude of LENGTH can possibly change quite
 a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.\\
 
 _Conclusion_

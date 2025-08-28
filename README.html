@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-27 Ср 20:38 -->
+<!-- 2025-08-28 Чт 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -244,13 +244,13 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Soft Optimal Stop For 99% Guarantee</h1>
 <p>
-By <a href="https://glat.info">Guillaume Lathoud</a>, August 2025 - glat@glat.info - <a href="https://github.com/glathoud/sos99">Github</a> <a href="https://glat.info/sos99/">website</a> <a href="./README.pdf">PDF</a><br />
+By <a href="https://glat.info">Guillaume Lathoud</a>, August 2025 (glat@glat.info) <a href="https://github.com/glathoud/sos99">Github</a> <a href="https://glat.info/sos99/">web</a> <a href="./README.pdf">PDF</a><br />
 </p>
 
 
 <p>
 The present document and all accompanying files are covered by the
-Boost License, as described in <a href="./LICENSE">./LICENSE</a><br />
+Boost License, as described in <a href="./LICENSE">./LICENSE</a> (unless precised otherwise).<br />
 </p>
 
 <p>
@@ -258,14 +258,25 @@ Boost License, as described in <a href="./LICENSE">./LICENSE</a><br />
 <a href="https://en.wikipedia.org/wiki/Secretary_problem">https://en.wikipedia.org/wiki/Secretary_problem</a><br />
 </p>
 
+
+<div class="figure">
+<p><img src="250px_secretary_problem.png" alt="250px_secretary_problem.png" />
+</p>
+</div>
+
 <p>
-The Optimal Stop Problem &amp; its solution (37%&#x2026;) sound nice, but 37%
-also means that one has a 37% chance to end up with the fallback
-solution - i.e. to pick the last candidate: say one already saw the
-best possible candidate before the 37% cutoff, then one mechanically
-ends up picking the last candidate, which gives a pretty random
-result. The output can be pretty bad, so the reliability is not
-guaranteed, at least not over a single pass.
+(illustration by cmglee - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=163173987">https://commons.wikimedia.org/w/index.php?curid=163173987</a>)
+</p>
+
+<p>
+The Secretary Problem &amp; its Optimal Stop solution (37%&#x2026;) sound
+nice, but 37% also means that one has a 37% chance to end up with
+the fallback solution - i.e. to pick the last candidate. Indeed, if one
+already saw the best possible candidate before the 37% cutoff, then
+one mechanically ends up picking the last candidate (case 3 in the
+above figure), which gives a pretty random result. The output can be
+pretty bad, so the reliability is not guaranteed, at least not over
+a single pass.
 </p>
 
 <p>
@@ -279,8 +290,9 @@ guarantee with 99% chance that we'll pick a "pretty good" candidate
 </p>
 
 <p>
-So we need a strategy to maximize the worst case, i.e. maximize the
-1% lowest percentile across the results of many simulations.<br />
+So we need a strategy to maximize the worst case. To that effect, we
+choose to maximize the score of the 1% lowest percentile across the results of
+many simulations.<br />
 </p>
 
 <p>
@@ -312,7 +324,7 @@ So the differences with the Optimal Stop are:
 </p>
 
 <ul class="org-ul">
-<li>in the evaluation: for a given threshold, we repeat a simulation
+<li>in the problem &amp; evaluation: for a given threshold, we repeat a simulation
 many times and look at the score of the lowest 1% percentile
 (instead of "percentage that picked the true best one").</li>
 
@@ -357,7 +369,7 @@ soft_factor values, here are the corresponding implementations:
 </div>
 
 <p>
-That figure shows the score of the lowest 1% percentile. Notice in
+The previous figure shows the score of the lowest 1% percentile. Notice in
 all cases the break off when increasing too much the cutoff N_STOP.
 </p>
 
@@ -368,7 +380,7 @@ which gives a lowest 1% percentile with a score of 0.68.
 
 <p>
 Tradeoff: When accepting the 1% risk, that result is a pretty good
-security, and most likely in practice we'll end up with a better
+guarantee, and most likely in practice we'll end up with a better
 pick. For soft_factor=80% and cutoff threshold around 40/100:
 </p>
 <ul class="org-ul">
@@ -381,7 +393,7 @@ Values around 0.72 can be judged as "pretty good", which was our objective.
 </p>
 
 <p>
-<span class="underline">Figure</span>: score of the lowest 1% percentile, and median score of the top 99% percentiles, for soft_factor=80% and various cutoff values (for/with Octave):
+<span class="underline">Figure</span>: for soft_factor=80% and various cutoff values, score of the lowest 1% percentile, and median score of the top 99% percentiles (for/with Octave):
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m">Octave code to produce the figure</a></li>
@@ -394,7 +406,7 @@ Values around 0.72 can be judged as "pretty good", which was our objective.
 </div>
 
 <p>
-Note: Generally, changing the order of magnitude of LENGTH can possibly change quite
+<span class="underline">Observation</span>: Generally, changing the order of magnitude of LENGTH can possibly change quite
 a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.<br />
 </p>
 
@@ -408,7 +420,7 @@ candidate, we built a strategy that guarantees 99% success.
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-08-27 Ср 20:38</p>
+<p class="date">Created: 2025-08-28 Чт 12:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
