@@ -99,7 +99,7 @@ _Figure_: for soft_factor=80% and various cutoff values, score of the lowest 1% 
 file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
 
 _Observation_: Generally, changing the order of magnitude of LENGTH can possibly change quite
-a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.\\
+a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above show: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.\\
 
 _Conclusion_
 
