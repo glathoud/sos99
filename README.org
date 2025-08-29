@@ -9,52 +9,85 @@ By [[https://glat.info][Guillaume Lathoud]], August 2025 (glat@glat.info) [[http
 The present document and all accompanying files are covered by the
 Boost License, as described in file:./LICENSE (unless precised otherwise).\\
 
-_Starting point:_
-https://en.wikipedia.org/wiki/Secretary_problem\\
+/The peculiarities of the Parisian real estate market inspired this work./\\
+\\
+
+_Starting point:_ [[https://en.wikipedia.org/wiki/Secretary_problem][Secretary Problem]]\\
+The rest of the present article assumes the reader to know the
+Secretary Problem. If not, please read it first. 
 
 #+ATTR_LATEX: :height 250px
 file:250px_secretary_problem.png
 
-(illustration by cmglee - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=163173987)
+(illustration by cmglee - Own work, CC BY-SA 4.0, [[https://commons.wikimedia.org/w/index.php?curid=163173987][original]])\\
 
-The Secretary Problem & its Optimal Stop solution (37%...) sound
-nice, but 37% also means that one has a 37% chance to end up with
-the fallback solution - i.e. to pick the last candidate. Indeed, if one
-already saw the best possible candidate before the 37% cutoff, then
-one mechanically ends up picking the last candidate (case 3 in the
-above figure), which gives a pretty random result. The output can be
+_Secretary Problem Strategy:_
+
+ - ("explore") look at the first N_STOP candidates
+   - pick none of them
+
+ - determine threshold_score := best_score_of_N_STOP
+
+ - ("select") now look at the rest candidates
+   - pick the first one with score > threshold_score
+   - else pick the last one
+
+In the Secretary Problem, the goal is "to have the highest
+probability of selecting the best applicant of the whole group". The
+best applicant is marked with a white star in the above figure.
+
+For that goal, [[https://en.wikipedia.org/wiki/Secretary_problem][it is shown]] that the cutoff N_STOP is optimal at around 37% of the
+total number of candidates.\\
+
+_Issue_
+
+Such a goal, and its optimal stop solution (37%), sound nice ;
+however 37% also means that one has a 37% chance to end up with the
+fallback solution - i.e. to pick the last candidate. 
+
+Indeed, if - like in case 3 in the above figure - one already saw
+the best possible candidate (white star) before the 37% cutoff, then
+one mechanically ends up picking the last candidate (marked in
+yellow), which gives a pretty random result. The output can be
 pretty bad, so the reliability is not guaranteed, at least not over
 a single pass.
 
-And in life, there are quite a few single pass situations.
+And in life, there are quite a few single pass situations.\\
 
-So instead, let us try to solve a slightly different problem:
-guarantee with 99% chance that we'll pick a "pretty good" candidate
-(not targetting the best one).
+_A different goal_
 
-So we need a strategy to maximize the worst case. To that effect, we
+Let us look at a slightly different problem: guarantee with 99%
+chance that we'll pick a "pretty good" candidate (not targetting the
+best one).
+
+Then we need a strategy to maximize the worst case. To that effect, we
 choose to maximize the score of the 1% lowest percentile across the results of
 many simulations.\\
 
-_Proposed strategy:_ very similar to the Optimal Stop one, but a bit
+#+begin_export latex
+  \clearpage
+#+end_export
+
+_Proposed strategy:_ very similar to the Secretary Problem strategy, just a bit
 softer:
 
- - look at the first N_STOP candidates (e.g. cutoff 37%, or any
+ - ("explore") look at the first N_STOP candidates (e.g. cutoff 37%, or any
    other percentage of the whole number of candidates)
    - pick none of them
 
  - determine threshold_score := soft_factor * best_score_of_N_STOP
    - example soft_factor: 80%
 
- - now start looking at the rest candidates
+ - ("select") now look at the rest candidates
    - pick the first one with score > threshold_score
    - else pick the last one
 
-So the differences with the Optimal Stop are:
+So the differences with the Secretary Problem are:
 
- - in the problem & evaluation: for a given threshold, we repeat a simulation
-   many times and look at the score of the lowest 1% percentile
-   (instead of "percentage that picked the true best one").
+ - in the problem & evaluation: for a given value of the cutoff
+   N_STOP, we repeat a simulation many times and look at the score
+   of the lowest 1% percentile (instead of "percentage that picked
+   the best candidate").
 
  - in the solution: introduced a soft_factor
 
@@ -64,7 +97,7 @@ We don't know anything about the target market, so let's assume that
 the scores of the candidates are uniformly distributed, from worse
 (0.0) to best (1.0).
 
-For a relatively total small number of candidates LENGTH=100 (for
+For a relatively small total number of candidates LENGTH=100 (for
 many scenarios, of a realistic order of magnitude), and various
 soft_factor values, here are the corresponding implementations:
 
@@ -74,35 +107,64 @@ soft_factor values, here are the corresponding implementations:
  - [[file:good_stop_other_strategy_less_demanding90pct_prctile1_simul_length100.d][soft_factor=90%]]
  - [[file:good_stop_other_strategy_less_demanding95pct_prctile1_simul_length100.d][soft_factor=95%]]
 
-_Figure_: score at the lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
+#+begin_export latex
+  \clearpage
+#+end_export
+
+_Figure_: score at the lowest 1% percentile for various soft_factor values and various cutoff (N_STOP) values:
  - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.m][octave code to produce the figure]]
  - figure (click [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
 
-The previous figure shows the score of the lowest 1% percentile. Notice in
-all cases the break off when increasing too much the cutoff N_STOP.
+In all cases, increasing too much the
+cutoff N_STOP leads to failure.
 
-My favorite would be soft_factor=80% and cutoff threshold around 40/100,
-which gives a lowest 1% percentile with a score of 0.68.
+My favorite would be soft_factor=80% and cutoff threshold N_STOP around 40/100,
+which gives a score of 0.68 at the lowest 1% percentile.
 
-Tradeoff: When accepting the 1% risk, that result is a pretty good
-guarantee, and most likely in practice we'll end up with a better
-pick. For soft_factor=80% and cutoff threshold around 40/100:
+
+When accepting the 1% risk, that result is a pretty good guarantee,
+and most likely in practice we'll end up with a better pick, as shown below.
+
+#+begin_export latex
+  \clearpage
+#+end_export
+
+For soft_factor=80% and cutoff threshold around 40/100:
  - score at the  lowest 1% percentile: around 0.68
  - median score of top 99% percentile: around 0.72
 
-Values around 0.72 can be judged as "pretty good", which was our objective. 
+Values around 0.72 can be judged as "pretty good" - our objective.\\ 
 
-_Figure_: for soft_factor=80% and various cutoff values, score of the lowest 1% percentile, and median score of the top 99% percentiles (for/with Octave):
+_Figure_: for soft_factor=80% and various cutoff values, score at the lowest 1% percentile, and median score of the top 99% percentiles:
  - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m][Octave code to produce the figure]]
  - figure (click [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.png
 
-_Observation_: Generally, changing the order of magnitude of LENGTH can possibly change quite
-a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above show: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.\\
+#+begin_export latex
+  \clearpage
+#+end_export
+
+_General Observation_
+
+Changing the order of magnitude of LENGTH can possibly change quite
+a bit the shape of the results. However, a common behaviour emerges,
+similar to what the above pictures show: with increasing N_STOP, the
+score increases, then shows a plateau ; then when further increasing
+N_STOP, the score abruptly falls down to zero.
+
+In other words, about N_STOP: to get a "pretty good" result, one
+should "explore" long enough (the score increases), but not too long
+either, in order to guarantee the objective of 99% success (otherwise the
+score abruptly falls down to zero).\\
 
 _Conclusion_
 
 By *not* targetting the best candidate, but rather a "pretty good"
-candidate, we built a strategy that guarantees 99% success.
+candidate, we built a strategy that guarantees 99% success.\\
+
+_Acknowledgments_
+
+Thanks to Julien Bourgeois for his comments. 
+
 

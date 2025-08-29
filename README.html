@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-28 Чт 12:39 -->
+<!-- 2025-08-29 Пт 09:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -254,8 +254,14 @@ Boost License, as described in <a href="./LICENSE">./LICENSE</a> (unless precise
 </p>
 
 <p>
-<span class="underline">Starting point:</span>
-<a href="https://en.wikipedia.org/wiki/Secretary_problem">https://en.wikipedia.org/wiki/Secretary_problem</a><br />
+<i>The peculiarities of the Parisian real estate market inspired this work.</i><br />
+<br />
+</p>
+
+<p>
+<span class="underline">Starting point:</span> <a href="https://en.wikipedia.org/wiki/Secretary_problem">Secretary Problem</a><br />
+The rest of the present article assumes the reader to know the
+Secretary Problem. If not, please read it first. 
 </p>
 
 
@@ -265,43 +271,85 @@ Boost License, as described in <a href="./LICENSE">./LICENSE</a> (unless precise
 </div>
 
 <p>
-(illustration by cmglee - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=163173987">https://commons.wikimedia.org/w/index.php?curid=163173987</a>)
+(illustration by cmglee - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=163173987">original</a>)<br />
 </p>
 
 <p>
-The Secretary Problem &amp; its Optimal Stop solution (37%&#x2026;) sound
-nice, but 37% also means that one has a 37% chance to end up with
-the fallback solution - i.e. to pick the last candidate. Indeed, if one
-already saw the best possible candidate before the 37% cutoff, then
-one mechanically ends up picking the last candidate (case 3 in the
-above figure), which gives a pretty random result. The output can be
+<span class="underline">Secretary Problem Strategy:</span>
+</p>
+
+<ul class="org-ul">
+<li>("explore") look at the first N_STOP candidates
+<ul class="org-ul">
+<li>pick none of them</li>
+</ul></li>
+
+<li>determine threshold_score := best_score_of_N_STOP</li>
+
+<li>("select") now look at the rest candidates
+<ul class="org-ul">
+<li>pick the first one with score &gt; threshold_score</li>
+<li>else pick the last one</li>
+</ul></li>
+</ul>
+
+<p>
+In the Secretary Problem, the goal is "to have the highest
+probability of selecting the best applicant of the whole group". The
+best applicant is marked with a white star in the above figure.
+</p>
+
+<p>
+For that goal, <a href="https://en.wikipedia.org/wiki/Secretary_problem">it is shown</a> that the cutoff N_STOP is optimal at around 37% of the
+total number of candidates.<br />
+</p>
+
+<p>
+<span class="underline">Issue</span>
+</p>
+
+<p>
+Such a goal, and its optimal stop solution (37%), sound nice ;
+however 37% also means that one has a 37% chance to end up with the
+fallback solution - i.e. to pick the last candidate. 
+</p>
+
+<p>
+Indeed, if - like in case 3 in the above figure - one already saw
+the best possible candidate (white star) before the 37% cutoff, then
+one mechanically ends up picking the last candidate (marked in
+yellow), which gives a pretty random result. The output can be
 pretty bad, so the reliability is not guaranteed, at least not over
 a single pass.
 </p>
 
 <p>
-And in life, there are quite a few single pass situations.
+And in life, there are quite a few single pass situations.<br />
 </p>
 
 <p>
-So instead, let us try to solve a slightly different problem:
-guarantee with 99% chance that we'll pick a "pretty good" candidate
-(not targetting the best one).
+<span class="underline">A different goal</span>
 </p>
 
 <p>
-So we need a strategy to maximize the worst case. To that effect, we
+Let us look at a slightly different problem: guarantee with 99%
+chance that we'll pick a "pretty good" candidate (not targetting the
+best one).
+</p>
+
+<p>
+Then we need a strategy to maximize the worst case. To that effect, we
 choose to maximize the score of the 1% lowest percentile across the results of
 many simulations.<br />
 </p>
 
 <p>
-<span class="underline">Proposed strategy:</span> very similar to the Optimal Stop one, but a bit
+<span class="underline">Proposed strategy:</span> very similar to the Secretary Problem strategy, just a bit
 softer:
 </p>
 
 <ul class="org-ul">
-<li>look at the first N_STOP candidates (e.g. cutoff 37%, or any
+<li>("explore") look at the first N_STOP candidates (e.g. cutoff 37%, or any
 other percentage of the whole number of candidates)
 <ul class="org-ul">
 <li>pick none of them</li>
@@ -312,7 +360,7 @@ other percentage of the whole number of candidates)
 <li>example soft_factor: 80%</li>
 </ul></li>
 
-<li>now start looking at the rest candidates
+<li>("select") now look at the rest candidates
 <ul class="org-ul">
 <li>pick the first one with score &gt; threshold_score</li>
 <li>else pick the last one</li>
@@ -320,13 +368,14 @@ other percentage of the whole number of candidates)
 </ul>
 
 <p>
-So the differences with the Optimal Stop are:
+So the differences with the Secretary Problem are:
 </p>
 
 <ul class="org-ul">
-<li>in the problem &amp; evaluation: for a given threshold, we repeat a simulation
-many times and look at the score of the lowest 1% percentile
-(instead of "percentage that picked the true best one").</li>
+<li>in the problem &amp; evaluation: for a given value of the cutoff
+N_STOP, we repeat a simulation many times and look at the score
+of the lowest 1% percentile (instead of "percentage that picked
+the best candidate").</li>
 
 <li>in the solution: introduced a soft_factor</li>
 </ul>
@@ -342,7 +391,7 @@ the scores of the candidates are uniformly distributed, from worse
 </p>
 
 <p>
-For a relatively total small number of candidates LENGTH=100 (for
+For a relatively small total number of candidates LENGTH=100 (for
 many scenarios, of a realistic order of magnitude), and various
 soft_factor values, here are the corresponding implementations:
 </p>
@@ -356,7 +405,7 @@ soft_factor values, here are the corresponding implementations:
 </ul>
 
 <p>
-<span class="underline">Figure</span>: score at the lowest 1% percentile for various soft_factor values and various cutoff values (for/with Octave): 
+<span class="underline">Figure</span>: score at the lowest 1% percentile for various soft_factor values and various cutoff (N_STOP) values:
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.m">octave code to produce the figure</a></li>
@@ -369,19 +418,23 @@ soft_factor values, here are the corresponding implementations:
 </div>
 
 <p>
-The previous figure shows the score of the lowest 1% percentile. Notice in
-all cases the break off when increasing too much the cutoff N_STOP.
+In all cases, increasing too much the
+cutoff N_STOP leads to failure.
 </p>
 
 <p>
-My favorite would be soft_factor=80% and cutoff threshold around 40/100,
-which gives a lowest 1% percentile with a score of 0.68.
+My favorite would be soft_factor=80% and cutoff threshold N_STOP around 40/100,
+which gives a score of 0.68 at the lowest 1% percentile.
+</p>
+
+
+<p>
+When accepting the 1% risk, that result is a pretty good guarantee,
+and most likely in practice we'll end up with a better pick, as shown below.
 </p>
 
 <p>
-Tradeoff: When accepting the 1% risk, that result is a pretty good
-guarantee, and most likely in practice we'll end up with a better
-pick. For soft_factor=80% and cutoff threshold around 40/100:
+For soft_factor=80% and cutoff threshold around 40/100:
 </p>
 <ul class="org-ul">
 <li>score at the  lowest 1% percentile: around 0.68</li>
@@ -389,11 +442,11 @@ pick. For soft_factor=80% and cutoff threshold around 40/100:
 </ul>
 
 <p>
-Values around 0.72 can be judged as "pretty good", which was our objective. 
+Values around 0.72 can be judged as "pretty good" - our objective.<br />
 </p>
 
 <p>
-<span class="underline">Figure</span>: for soft_factor=80% and various cutoff values, score of the lowest 1% percentile, and median score of the top 99% percentiles (for/with Octave):
+<span class="underline">Figure</span>: for soft_factor=80% and various cutoff values, score at the lowest 1% percentile, and median score of the top 99% percentiles:
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile__simul_length100.m">Octave code to produce the figure</a></li>
@@ -406,8 +459,22 @@ Values around 0.72 can be judged as "pretty good", which was our objective.
 </div>
 
 <p>
-<span class="underline">Observation</span>: Generally, changing the order of magnitude of LENGTH can possibly change quite
-a bit the shape of the results. However, a common behaviour emerges, similar to what the pictures above show: with increasing N_STOP, increasing score, then a plateau whose width relative to the LENGTH value appears to be variable ; then when further increasing N_STOP, an abrupt cliff, falling down to zero.<br />
+<span class="underline">General Observation</span>
+</p>
+
+<p>
+Changing the order of magnitude of LENGTH can possibly change quite
+a bit the shape of the results. However, a common behaviour emerges,
+similar to what the above pictures show: with increasing N_STOP, the
+score increases, then shows a plateau ; then when further increasing
+N_STOP, the score abruptly falls down to zero.
+</p>
+
+<p>
+In other words, about N_STOP: to get a "pretty good" result, one
+should "explore" long enough (the score increases), but not too long
+either, in order to guarantee the objective of 99% success (otherwise the
+score abruptly falls down to zero).<br />
 </p>
 
 <p>
@@ -416,11 +483,19 @@ a bit the shape of the results. However, a common behaviour emerges, similar to 
 
 <p>
 By <b>not</b> targetting the best candidate, but rather a "pretty good"
-candidate, we built a strategy that guarantees 99% success.
+candidate, we built a strategy that guarantees 99% success.<br />
+</p>
+
+<p>
+<span class="underline">Acknowledgments</span>
+</p>
+
+<p>
+Thanks to Julien Bourgeois for his comments. 
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-08-28 Чт 12:39</p>
+<p class="date">Created: 2025-08-29 Пт 09:24</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
