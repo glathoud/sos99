@@ -153,10 +153,9 @@ similar to what the above pictures show: with increasing N_STOP, the
 score increases, then shows a plateau ; then when further increasing
 N_STOP, the score abruptly falls down to zero.
 
-In other words, about N_STOP: to get a "pretty good" result, one
+In other words, about N_STOP: to get a "pretty good" result and guarantee 99% success, one
 should "explore" long enough (the score increases), but not too long
-either, in order to guarantee the objective of 99% success (otherwise the
-score abruptly falls down to zero).\\
+either (abrupt fall to zero).\\
 
 _Conclusion_
 
