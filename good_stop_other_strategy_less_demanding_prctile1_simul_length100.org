@@ -32,11 +32,11 @@ So we need a strategy to maximize the worst case, i.e. maximize the
 _Proposed strategy:_ very similar to the Optimal Stop one, but a bit
 softer:
 
- - look at the first N_STOP candidates (e.g. cutoff 37%, or any
+ - look at the first N_EXPLORE candidates (e.g. cutoff 37%, or any
    other percentage of the whole number of candidates)
    - pick none of them
 
- - determine threshold_score := soft_factor * best_score_of_N_STOP
+ - determine threshold_score := soft_factor * best_score_of_N_EXPLORE
    - example soft_factor: 80%
 
  - now start looking at the rest candidates
@@ -72,7 +72,7 @@ some snapshot of the outputs (for/with Octave): score of lowest 1% percentile:
  - [[file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png][figure]]: file:good_stop_other_strategy_less_demanding_prctile1_simul_length100.png
 
 That figure shows the score of the lowest 1% percentile. Notice in
-all cases the break off when increasing too much the cutoff N_STOP.
+all cases the break off when increasing too much the cutoff N_EXPLORE.
 
 My favorite would be soft_factor=80% and cutoff threshold around 40/100,
 which gives a lowest 1% percentile with a score of 0.68.

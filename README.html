@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-29 Пт 09:29 -->
+<!-- 2025-09-01 Пн 09:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -254,7 +254,7 @@ Boost License, as described in <a href="./LICENSE">./LICENSE</a> (unless precise
 </p>
 
 <p>
-<i>The peculiarities of the Parisian real estate market inspired this work.</i><br />
+<i>Work inspired by the peculiarities of the Parisian real estate market.</i><br />
 <br />
 </p>
 
@@ -279,12 +279,12 @@ Secretary Problem. If not, please read it first.
 </p>
 
 <ul class="org-ul">
-<li>("explore") look at the first N_STOP candidates
+<li>("explore") look at the first N_EXPLORE candidates
 <ul class="org-ul">
 <li>pick none of them</li>
 </ul></li>
 
-<li>determine threshold_score := best_score_of_N_STOP</li>
+<li>determine threshold_score := best_score_of_N_EXPLORE</li>
 
 <li>("select") now look at the rest candidates
 <ul class="org-ul">
@@ -300,7 +300,7 @@ best applicant is marked with a white star in the above figure.
 </p>
 
 <p>
-For that goal, <a href="https://en.wikipedia.org/wiki/Secretary_problem">it is shown</a> that the cutoff N_STOP is optimal at around 37% of the
+For that goal, <a href="https://en.wikipedia.org/wiki/Secretary_problem">it is shown</a> that the cutoff N_EXPLORE is optimal at around 37% of the
 total number of candidates.<br />
 </p>
 
@@ -349,13 +349,13 @@ softer:
 </p>
 
 <ul class="org-ul">
-<li>("explore") look at the first N_STOP candidates (e.g. cutoff 37%, or any
+<li>("explore") look at the first N_EXPLORE candidates (e.g. cutoff 37%, or any
 other percentage of the whole number of candidates)
 <ul class="org-ul">
 <li>pick none of them</li>
 </ul></li>
 
-<li>determine threshold_score := soft_factor * best_score_of_N_STOP
+<li>determine threshold_score := soft_factor * best_score_of_N_EXPLORE
 <ul class="org-ul">
 <li>example soft_factor: 80%</li>
 </ul></li>
@@ -373,7 +373,7 @@ So the differences with the Secretary Problem are:
 
 <ul class="org-ul">
 <li>in the problem &amp; evaluation: for a given value of the cutoff
-N_STOP, we repeat a simulation many times and look at the score
+N_EXPLORE, we repeat a simulation many times and look at the score
 of the lowest 1% percentile (instead of "percentage that picked
 the best candidate").</li>
 
@@ -405,7 +405,7 @@ soft_factor values, here are the corresponding implementations:
 </ul>
 
 <p>
-<span class="underline">Figure</span>: score at the lowest 1% percentile for various soft_factor values and various cutoff (N_STOP) values:
+<span class="underline">Figure</span>: score at the lowest 1% percentile for various soft_factor values and various cutoff (N_EXPLORE) values:
 </p>
 <ul class="org-ul">
 <li><a href="good_stop_other_strategy_less_demanding_prctile1_simul_length100.m">octave code to produce the figure</a></li>
@@ -419,11 +419,11 @@ soft_factor values, here are the corresponding implementations:
 
 <p>
 In all cases, increasing too much the
-cutoff N_STOP leads to failure.
+cutoff N_EXPLORE leads to failure.
 </p>
 
 <p>
-My favorite would be soft_factor=80% and cutoff threshold N_STOP around 40/100,
+My favorite would be soft_factor=80% and cutoff threshold N_EXPLORE around 40/100,
 which gives a score of 0.68 at the lowest 1% percentile.
 </p>
 
@@ -465,13 +465,13 @@ Values around 0.72 can be judged as "pretty good" - our objective.<br />
 <p>
 Changing the order of magnitude of LENGTH can possibly change quite
 a bit the shape of the results. However, a common behaviour emerges,
-similar to what the above pictures show: with increasing N_STOP, the
+similar to what the above pictures show: with increasing N_EXPLORE, the
 score increases, then shows a plateau ; then when further increasing
-N_STOP, the score abruptly falls down to zero.
+N_EXPLORE, the score abruptly falls down to zero.
 </p>
 
 <p>
-In other words, about N_STOP: to get a "pretty good" result and guarantee 99% success, one
+In other words, about N_EXPLORE: to get a "pretty good" result and guarantee 99% success, one
 should "explore" long enough (the score increases), but not too long
 either (abrupt fall to zero).<br />
 </p>
@@ -494,7 +494,7 @@ Thanks to Julien Bourgeois for his comments.
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-08-29 Пт 09:29</p>
+<p class="date">Created: 2025-09-01 Пн 09:50</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
