@@ -26,7 +26,7 @@ _Secretary Problem Strategy:_
  - ("explore") look at the first N_EXPLORE candidates
    - pick none of them
 
- - determine threshold_score := best_score_of_N_EXPLORE
+ - determine: threshold_score := best_score_of_N_EXPLORE
 
  - ("select") now look at the rest candidates
    - pick the first one with score > threshold_score
