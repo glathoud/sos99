@@ -4,6 +4,8 @@ import std.random;
 import std.range;
 import std.stdio;
 
+// The Boost License applies to the present file, as described in file ./LICENSE
+
 // usage:
 // rdmd <this_filename>
 // works with at least LDC 1.30.0 - DMD v2.100.1

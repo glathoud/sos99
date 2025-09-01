@@ -9,7 +9,7 @@ By [[https://glat.info][Guillaume Lathoud]], August 2025 (glat@glat.info) [[http
 The present document and all accompanying files are covered by the
 Boost License, as described in file:./LICENSE (unless precised otherwise).\\
 
-/The peculiarities of the Parisian real estate market inspired this work./\\
+/Work inspired by the peculiarities of the Parisian real estate market./\\
 \\
 
 _Starting point:_ [[https://en.wikipedia.org/wiki/Secretary_problem][Secretary Problem]]\\
