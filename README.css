@@ -3,6 +3,7 @@ body {max-width: 40em; margin: auto;
       font-family: helvetica; 
       text-align: justify;
       font-family: Verdana,Arial,'Lucida Grande',Sans-Serif;
+      line-height: 1.5em;
       }
       .anchor { margin-left: 0.5em; }
       .by { float: right; }
@@ -10,12 +11,11 @@ body {max-width: 40em; margin: auto;
       .halfvisible { opacity: 0.5; }
       .invisible {opacity: 0.01; }
       img {max-width: 100%;}
-      h1 { margin-top: 3em; }
-      h2 { margin-top: 2em; }
-      h3 { margin-top: 1em; }
+      h1 { margin-top: 3em; line-height: normal; }
+      h2 { margin-top: 2em; line-height: normal; }
+      h3 { margin-top: 1em; line-height: normal; }
       h1.title { margin-top: 0.75em; }
       h1.btop { border-top: solid 3px black; padding-top: 0.55em; }
-      p { line-height: 1.5em; }
       @media print { .anchor, .halfvisible, .invisible { visibility: hidden; } }
       .red { color: #ff0000 }
       .green { color: #00d400 }
