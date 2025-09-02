@@ -40,7 +40,7 @@ void main()
             foreach (x; arr[ i+1..LENGTH ])
             {
               x2 = x;
-              if (cast(double)( x2 ) > (0.85 * cast(double)( max_before )))
+              if (cast(double)( x2 ) > (1.00 * cast(double)( max_before )))
                 break;
             }
             return x2;

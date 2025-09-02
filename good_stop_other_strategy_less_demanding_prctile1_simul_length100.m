@@ -10,6 +10,6 @@ hold on; plot([ 0.0100 0.0400 0.0900 0.1300 0.2600 0.3000 0.3300 0.3900 0.3900 0
 grid;
 
 legend('f 70%', 'f 80%', 'f 85%','f 90%', 'f 95%');
-xlabel('cutoff (N\_STOP)');
+xlabel('cutoff (N\_EXPLORE)');
 ylabel('score');
 title('LENGTH=100');

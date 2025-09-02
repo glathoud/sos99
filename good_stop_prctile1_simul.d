@@ -47,7 +47,7 @@ void main()
             return x2;
           }();
           
-          score[ i*N_ITER + iter ] = cast(double)( selected ) / cast( double )( LENGTH );
+          score[ i*N_ITER + iter ] = cast(double)( selected ) / cast( double )( LENGTH ); // uniform distribution of scores from worst (0.0) to best (1.0)
         }
     }
   writeln;
