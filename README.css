@@ -1,7 +1,6 @@
 body {max-width: 40em; margin: auto;
       padding: 0 1em 0 1em;
       font-family: helvetica; 
-      line-height: 1.5em;
       text-align: justify;
       font-family: Verdana,Arial,'Lucida Grande',Sans-Serif;
       }
@@ -16,6 +15,7 @@ body {max-width: 40em; margin: auto;
       h3 { margin-top: 1em; }
       h1.title { margin-top: 0.75em; }
       h1.btop { border-top: solid 3px black; padding-top: 0.55em; }
+      p { line-height: 1.5em; }
       @media print { .anchor, .halfvisible, .invisible { visibility: hidden; } }
       .red { color: #ff0000 }
       .green { color: #00d400 }
