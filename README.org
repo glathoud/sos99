@@ -12,6 +12,13 @@ Boost License, as described in file:./LICENSE (unless precised otherwise).\\
 /Work inspired by the peculiarities of the Parisian real estate market./\\
 \\
 
+This article proposes a variation of the Secretary Problem that 
+ensures high reliability of the result, i.e. maximizes the worst-case result.
+
+#+begin_export latex
+  \clearpage
+#+end_export
+
 _Starting point:_ [[https://en.wikipedia.org/wiki/Secretary_problem][Secretary Problem]]\\
 The rest of the present article assumes the reader to know the
 Secretary Problem. If not, please read it first. 
@@ -64,10 +71,6 @@ Then we need a strategy to maximize the worst case. To that effect, we
 choose to maximize the score of the 1% lowest percentile across the results of
 many simulations.\\
 
-#+begin_export latex
-  \clearpage
-#+end_export
-
 _Proposed strategy:_ very similar to the Secretary Problem strategy, just a bit
 softer:
 
@@ -81,6 +84,10 @@ softer:
  - ("select") now look at the rest candidates
    - pick the first one with score > threshold_score
    - else pick the last one
+
+#+begin_export latex
+  \clearpage
+#+end_export
 
 So the differences with the Secretary Problem are:
 
