@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-12-07 Вс 19:27 -->
+<!-- 2025-12-07 Вс 21:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -526,9 +526,79 @@ dropping the scores and applying Annex A. This should be roughly
 equivalent to having a function that maps scores to another space
 where the candidates are uniformly distributed.<br />
 </p>
+
+<p>
+<span class="underline">Annex C: Lowering the percentile from 1% down to 0.1% and 0.01%</span>
+</p>
+
+<p>
+The approach appears to be pretty robust, in fact guaranteeing
+99.99% success. See the figure below.
+</p>
+
+<p>
+<span class="underline">Figure</span>: score at the lowest 1% resp. 0.1% and 0.01% percentile for various soft_factor values and various cutoff (N_EXPLORE) values:
+</p>
+<ul class="org-ul">
+<li><a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.m">octave code to produce the figure</a></li>
+<li>figure (click <a href="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.png">here</a> to open a bigger version):</li>
+</ul>
+
+<div class="figure">
+<p><img src="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.png" alt="good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.png" />
+</p>
+</div>
+
+<p>
+<span class="underline">Annex D: Incremental improvement with a 2-step selection strategy</span>
+</p>
+
+<p>
+Reasoning &amp; 1st (additional) step: during the exploration phase, when we have already
+explored enough, e.g. at a "pre-cutoff point" at about 66% of the
+cutoff point, we can already estimate "top-tiers" to be above
+(1+soft_factor)/2 of the candidates seen so far - i.e. 90% for a
+soft_factor of 80%, and then, during the rest of the exploration,
+select such "top-tier", if any.
+</p>
+
+<p>
+2nd step: If no such "top-tier" is selected, then after the cutoff
+point, we pursue the selection phase unmodified (see soft_factor
+in the text above, e.g. 80% in the present example).
+</p>
+
+<p>
+Such a 2-step selection strategy permits to reasonably use higher 
+cutoff values while also permitting to select "top-tiers".
+</p>
+
+<p>
+For a soft_factor of 80% and a cutoff threshold around 60/100
+</p>
+
+<ul class="org-ul">
+<li>score at the lowest 1% percentile: around 0.75 (compare with 0.68 above)</li>
+<li>median score of top 99% percentile: around 0.78 (compare with 0.72 above)</li>
+</ul>
+
+<p>
+<span class="underline">Figure</span>: for soft_factor=80% and various cutoff values, score at the lowest 1% percentile, and median score of the top 99% percentiles:
+</p>
+
+<ul class="org-ul">
+<li><a href="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.d">modified D code to run the simulation</a></li>
+<li><a href="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.m">Octave code to produce the figure</a></li>
+<li>figure (click <a href="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png">here</a> to open a bigger version) - "f" is the original soft_factor result, "f2" the present 2-step selection strategy:</li>
+</ul>
+
+<div class="figure">
+<p><img src="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png" alt="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png" />
+</p>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-12-07 Вс 19:27</p>
+<p class="date">Created: 2025-12-07 Вс 21:05</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

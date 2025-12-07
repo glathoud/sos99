@@ -192,3 +192,41 @@ dropping the scores and applying Annex A. This should be roughly
 equivalent to having a function that maps scores to another space
 where the candidates are uniformly distributed.\\
 
+_Annex C: Lowering the percentile from 1% down to 0.1% and 0.01%_
+
+The approach appears to be pretty robust, in fact guaranteeing
+99.99% success. See the figure below.
+
+_Figure_: score at the lowest 1% resp. 0.1% and 0.01% percentile for various soft_factor values and various cutoff (N_EXPLORE) values:
+ - [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.m][octave code to produce the figure]]
+ - figure (click [[file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.png][here]] to open a bigger version):
+file:good_stop_other_strategy_less_demanding80pct_prctile1_and_median_top99prctile2__simul_length100.png
+
+_Annex D: Incremental improvement with a 2-step selection strategy_
+
+Reasoning & 1st (additional) step: during the exploration phase, when we have already
+explored enough, e.g. at a "pre-cutoff point" at about 66% of the
+cutoff point, we can already estimate "top-tiers" to be above
+(1+soft_factor)/2 of the candidates seen so far - i.e. 90% for a
+soft_factor of 80%, and then, during the rest of the exploration,
+select such "top-tier", if any.
+
+2nd step: If no such "top-tier" is selected, then after the cutoff
+point, we pursue the selection phase unmodified (see soft_factor
+in the text above, e.g. 80% in the present example).
+
+Such a 2-step selection strategy permits to reasonably use higher 
+cutoff values while also permitting to select "top-tiers".
+
+For a soft_factor of 80% and a cutoff threshold around 60/100
+
+ - score at the lowest 1% percentile: around 0.75 (compare with 0.68 above)
+ - median score of top 99% percentile: around 0.78 (compare with 0.72 above)
+
+_Figure_: for soft_factor=80% and various cutoff values, score at the lowest 1% percentile, and median score of the top 99% percentiles:
+
+ - [[file:good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.d][modified D code to run the simulation]]
+ - [[file:good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.m][Octave code to produce the figure]]
+ - figure (click [[file:good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png][here]] to open a bigger version) - "f" is the original soft_factor result, "f2" the present 2-step selection strategy:
+file:good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png
+
