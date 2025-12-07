@@ -102,7 +102,8 @@ _One possible implementation: uniform use case_
 
 We don't know anything about the target market, so let's assume that
 the scores of the candidates are uniformly distributed, from worse
-(0.0) to best (1.0).
+(0.0) to best (1.0). (See Annex B for an adaptation to non-uniform
+score distributions).
 
 For a relatively small total number of candidates LENGTH=100 (for
 many scenarios, of a realistic order of magnitude), and various
@@ -171,6 +172,23 @@ candidate, we built a strategy that guarantees 99% success.\\
 
 _Acknowledgments_
 
-Thanks to Julien Bourgeois for his comments. 
+Thanks to Julien Bourgeois for his comments. \\
 
+_Annex A: Without scores_
+
+As [[https://www.reddit.com/r/math/comments/1n83yht/a_variation_of_the_secretary_problem_to_guarantee/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][pointed out by user "barely_sentient" on r/math]], in the original
+Secretary Problem, the candidates are ranked in a total order, but
+there is no score value attributed to them. It is still possible to
+apply the strategy proposed here:
+
+ - at the cutoff point, by sorting the candidates already seen so far, and selecting a candidate that is better than at least 80% of the other candidates seen so far. Then that candidate itself can be used as a threshold:
+
+ - after the cutoff, when seeing a new candidate, just compare it to that "threshold" candidate.\\
+
+_Annex B: With scores following a non-uniform distribution_
+
+One could in practice "uniformize" the distribution by simply
+dropping the scores and applying Annex A. This should be roughly
+equivalent to having a function that maps scores to another space
+where the candidates are uniformly distributed.\\
 

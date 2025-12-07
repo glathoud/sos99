@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-09-02 Вт 13:27 -->
+<!-- 2025-12-07 Вс 19:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -392,7 +392,8 @@ the best candidate").</li>
 <p>
 We don't know anything about the target market, so let's assume that
 the scores of the candidates are uniformly distributed, from worse
-(0.0) to best (1.0).
+(0.0) to best (1.0). (See Annex B for an adaptation to non-uniform
+score distributions).
 </p>
 
 <p>
@@ -495,11 +496,39 @@ candidate, we built a strategy that guarantees 99% success.<br />
 </p>
 
 <p>
-Thanks to Julien Bourgeois for his comments. 
+Thanks to Julien Bourgeois for his comments. <br />
+</p>
+
+<p>
+<span class="underline">Annex A: Without scores</span>
+</p>
+
+<p>
+As <a href="https://www.reddit.com/r/math/comments/1n83yht/a_variation_of_the_secretary_problem_to_guarantee/?utm_source=share&amp;utm_medium=web3x&amp;utm_name=web3xcss&amp;utm_term=1&amp;utm_content=share_button">pointed out by user "barely_sentient" on r/math</a>, in the original
+Secretary Problem, the candidates are ranked in a total order, but
+there is no score value attributed to them. It is still possible to
+apply the strategy proposed here:
+</p>
+
+<ul class="org-ul">
+<li>at the cutoff point, by sorting the candidates already seen so far, and selecting a candidate that is better than at least 80% of the other candidates seen so far. Then that candidate itself can be used as a threshold:</li>
+
+<li>after the cutoff, when seeing a new candidate, just compare it to that "threshold" candidate.<br /></li>
+</ul>
+
+<p>
+<span class="underline">Annex B: With scores following a non-uniform distribution</span>
+</p>
+
+<p>
+One could in practice "uniformize" the distribution by simply
+dropping the scores and applying Annex A. This should be roughly
+equivalent to having a function that maps scores to another space
+where the candidates are uniformly distributed.<br />
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-09-02 Вт 13:27</p>
+<p class="date">Created: 2025-12-07 Вс 19:27</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
