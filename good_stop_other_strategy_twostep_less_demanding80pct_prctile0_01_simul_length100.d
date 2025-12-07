@@ -78,7 +78,7 @@ void main()
   
   const acc_score = score.chunks( N_ITER ).map!((c0) {
       auto c = c0.array.dup.sort.array;
-      return c[ cast(size_t)( round( .005 * cast( double )( LENGTH )) )];
+      return c[ cast(size_t)( round( .0001 * cast( double )( LENGTH )) )];
     }).array;
 
   writeln( "acc_score:" );
@@ -87,7 +87,7 @@ void main()
 
   const acc_score_top_median = score.chunks( N_ITER ).map!((c0) {
       auto c = c0.array.dup.sort.array;
-      return c[ cast(size_t)( round( (.005 + 0.995/2.0) * cast( double )( LENGTH )) )];
+      return c[ cast(size_t)( round( (.0001 + 0.9999/2.0) * cast( double )( LENGTH )) )];
     }).array;
 
   writeln( "acc_score_top_median:" );

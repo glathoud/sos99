@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-12-07 Вс 21:05 -->
+<!-- 2025-12-07 Вс 21:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soft Optimal Stop For 99% Guarantee</title>
@@ -596,9 +596,30 @@ For a soft_factor of 80% and a cutoff threshold around 60/100
 <p><img src="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png" alt="good_stop_other_strategy_twostep_less_demanding80pct_prctile1_simul_length100.png" />
 </p>
 </div>
+
+<p>
+Percentile analysis: lowering down from 1% to 0.1% and 0.01%
+(similarly to Annex C): the 2-step strategy appears very slightly
+less robust than the originally proposed one, but still very much 
+guaranteeing 99.9% and 99.99% success for reasonable cutoff values
+(say between around 40/100 and 60/100 for the present example).
+</p>
+
+<p>
+<span class="underline">Figure</span>: score at the lowest 1% resp. 0.1% and 0.01% percentile for various soft_factor values and various cutoff (N_EXPLORE) values:
+</p>
+<ul class="org-ul">
+<li><a href="good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.m">octave code to produce the figure</a></li>
+<li>figure (click <a href="good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.png">here</a> to open a bigger version):</li>
+</ul>
+
+<div class="figure">
+<p><img src="good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.png" alt="good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.png" />
+</p>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-12-07 Вс 21:05</p>
+<p class="date">Created: 2025-12-07 Вс 21:27</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
