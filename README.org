@@ -69,7 +69,10 @@ best one).
 
 Then we need a strategy to maximize the worst case. To that effect, we
 choose to maximize the score of the 1% lowest percentile across the results of
-many simulations.\\
+many simulations.
+
+I have not found existing literature examining that "reliability"
+goal, see the review in Annex E. \\
 
 _Proposed strategy:_ very similar to the Secretary Problem strategy, just a bit
 softer:
@@ -168,7 +171,9 @@ either (abrupt fall to zero).\\
 _Conclusion_
 
 By *not* targetting the best candidate, but rather a "pretty good"
-candidate, we built a strategy that guarantees 99% success.\\
+candidate, we built a strategy that guarantees 99% success - in fact
+99.99% (Annex C below). Incremental improvements can be obtained 
+with a 2-step selection approach (Annex D below). \\
 
 _Acknowledgments_
 
@@ -181,9 +186,9 @@ Secretary Problem, the candidates are ranked in a total order, but
 there is no score value attributed to them. It is still possible to
 apply the strategy proposed here:
 
- - at the cutoff point, by sorting the candidates already seen so far, and selecting a candidate that is better than at least 80% of the other candidates seen so far. Then that candidate itself can be used as a threshold:
+ - at the cutoff point, by sorting the candidates already seen so far, and selecting a candidate that is better than at least 80% (soft_ratio) of the other candidates seen so far. Then that candidate itself can be used as a threshold:
 
- - after the cutoff, when seeing a new candidate, just compare it to that "threshold" candidate.\\
+ - after the cutoff, to select a candidate, just compare it to that "threshold" candidate.\\
 
 _Annex B: With scores following a non-uniform distribution_
 
@@ -257,3 +262,40 @@ _Figure_: score at the lowest 1% resp. 0.1% and 0.01% percentile for various sof
  - figure (click [[file:good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.png][here]] to open a bigger version):
 file:good_stop_other_strategy_twostep_less_demanding80pct_prctile2_simul_length100.png
 
+#+begin_export latex
+  \clearpage
+#+end_export
+
+_Annex E: Comparision with existing literature_
+
+The goal of the proposed approach is "reliability": to optimize the
+worst-case scenario, by maximizing the score of the 1% lowest
+percentile.
+
+In the existing literature, the two closest works I found are the following:
+
+-- 1
+
+https://scholarworks.indianapolis.iu.edu/server/api/core/bitstreams/ad0bc930-ec29-4915-80ac-16843de42988/content
+
+Excerpt:
+
+"Score-Based Secretary Problem: In the context of the Secretary Problem, suppose that the employer, after interviewing the candidates, can assign absolute scores X1, X2, . . ., which are assumed to be drawn independently from the same known continuous distribution function F . What is the employer’s best strategy to maximize the chance of winning (that is, hiring the candidate with the highest score among all n candidates)? What is the maximum probability of winning?"
+
+=> still trying to maximize the same criterion as in the original Secretary Problem.
+
+-- 2
+
+https://as.nyu.edu/content/dam/nyu-as/politics/documents/faculty/brams/Secretary%20Problem.pdf
+
+Excerpt:
+
+"We compare three methods—Standard, Reserve (variants A and B), and Score according to three criteria:
+
+(1) Probability of selecting the best candidate;
+
+(2) Expected number of candidates to be interviewed; and
+
+(3) Expected quality of the candidate selected."
+
+=> The criterion (3) is closer to what I'm talking about, but still not maximizing the worst-case scenario - which would however probably be more relevant to a real-life scenario, i.e. an employer trying to absolutely avoid a bad match, and satisfied with a "pretty good" match. 
